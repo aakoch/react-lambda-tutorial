@@ -14,6 +14,7 @@ class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square 
+        key={i}
         value={this.props.squares[i]}
         onClick={() => this.props.onClick(i)}
         isWinner={this.props.winner.includes(i)}
@@ -22,33 +23,18 @@ class Board extends React.Component {
   }
 
   render() {
+    const cells = (rowNum) => 
+      [...Array(3).keys()].map((j) => this.renderSquare((rowNum * 3) + j));
 
-    // TODO: excerise to do a loop instead of hard-coding this
-    // for (let index = 0; index < 3; index++) {
-    //   <div className="board-row">
-    //      for (let index2 = 0; index2 < 3; index2++) {
-    //     {this.renderSquare(index * 3) + index2}
-    //    }
-    //   </div>
-    // }
+    const rows = [...Array(3).keys()].map((rowNum) =>
+      <div className="board-row" key={'row' + rowNum}>
+        {cells(rowNum)}
+      </div>
+    );
 
     return (
       <div>
-        <div className="board-row">
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
-          {this.renderSquare(5)}
-        </div>
-        <div className="board-row">
-          {this.renderSquare(6)}
-          {this.renderSquare(7)}
-          {this.renderSquare(8)}
-        </div>
+        {rows}
       </div>
     );
   }
